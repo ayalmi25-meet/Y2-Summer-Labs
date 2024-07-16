@@ -38,7 +38,6 @@ add_comment(myvideo,"ayal","liked it")
 print(myvideo)
 
 for i in range (495):
-	like(myvideo)
 
 
 

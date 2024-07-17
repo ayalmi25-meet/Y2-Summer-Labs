@@ -15,9 +15,16 @@
 
 <body>
 	<p>i guess you want to know your fortune</p>
-	<br></br>
+	<br/>
+	<form action="/home" method="POST">
+		 <input type="text" name="birthmonth" placeholder="Birth Month" >
+		 <input type="submit" value="Submit" />
+	</form>
+/>
 
-	<a href ={{url_for('fortune')}}>Tell me my fortune</a>
+
+	<!-- <a href ={{url_for('fortune')}}>Tell me my fortune</a> -->
+	<a href="fortune.html"><button>tell my fortune</button></a>
 
 
 

@@ -7,7 +7,7 @@ app = Flask(__name__, template_folder = "templates")
 app.config['SECRET_KEY']="username"
 
 @app.route('/' , methods=['GET','POST'])
-def Login():
+def ogin():
 	if request.method == "GET":
 		return render_template("login.html")
 	else:

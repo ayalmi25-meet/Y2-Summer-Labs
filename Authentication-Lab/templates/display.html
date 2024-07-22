@@ -6,8 +6,8 @@
 	<title>quotes</title>
 </head>
 <body>
-	{%for quote in quotess%}
-		<p>{{quote}}</p>
+	{%for quote in quotess.values()%}
+		<p>{{quote["text"]}} -- {{quote["said_by"]}}</p>
 	{%endfor%}
 	<br>
 	<a href = '/home'>click to back to home</a>

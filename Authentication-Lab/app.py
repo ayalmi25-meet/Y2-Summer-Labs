@@ -13,13 +13,17 @@ firebaseConfig = {
   "messagingSenderId": "1085585626944",
   "appId": "1:1085585626944:web:772bb1958e322b37d68ca5",
   "measurementId": "G-62VVZ0RY2D",
-  "databaseURL": ""
+  "databaseURL":"https://ayal-s-website-default-rtdb.europe-west1.firebasedatabase.app/"
 
 }
 
 
+
+
+
 firebase = pyrebase.initialize_app(firebaseConfig) 
 auth = firebase.auth()
+db = firebase.database()
 
 @app.route('/',methods=['GET','POST'])
 def login():
@@ -29,8 +33,12 @@ def login():
 	else:
 		email = request.form['email']
 		password = request.form['password']
+		username = request.form['username']
+		full_name = request.form['full_name']
 		try:
 			login_session['user'] = auth.create_user_with_email_and_password(email, password)
+			user_UID=login_session['user']['localId']
+			db.child('users').child('user_UID').set({"name":full_name,"username":username,"email":email})
 			login_session["quotes"] = []
 			login_session.modified = True
 			return redirect(url_for('home'))
@@ -63,8 +71,15 @@ def home():
 		return render_template("home.html")
 	else:
 		if request.args.get("f")== 'f1':
-			print(login_session)
-			login_session["quotes"].append(request.form['quote'])
+			quotewriter = request.form['quotewriter']
+			quoteog = request.form['quoteog']
+			user_UID=login_session['user']['localId']
+			quote = {"text":quoteog,"said_by":quotewriter,"uid":user_UID}
+			try:
+				db.child('Quotes').push(quote)
+			except:
+				print("not adding quote to db")
+
 			login_session.modified = True
 			return redirect(url_for('thanks'))
 		else:
@@ -89,8 +104,8 @@ def thanks():
 
 @app.route('/display')
 def display():
-	return render_template("display.html",quotess = login_session["quotes"])
-
+	quotess = db.child("Quotes").get().val()
+	return render_template("display.html",quotess =quotess)
 
 
 

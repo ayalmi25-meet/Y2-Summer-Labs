@@ -153,7 +153,7 @@ def reviews():
 			review = {"experience":experience,"improve":improve,"comment":comment}
 			db.child('reviews').push(review)
 
-			return redirect(url_for('thanks'))
+			return redirect(url_for('comments'))
 
 		except:
 			problem = "sorry, please fill all the form"
@@ -161,10 +161,11 @@ def reviews():
 		
 
 
-@app.route('comments',methods = ['GET','POST'])
+@app.route('/comments',methods = ['GET','POST'])
 def comments():
 	if request.method == 'GET':
-		comments = db.child('reviews').child('comment').get().val()
+		comments = db.child('reviews').get().val()
+		print(comments)
 		return render_template("display.html",comments = comments)
 
 	else:

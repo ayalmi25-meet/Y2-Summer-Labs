@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HOME</title>
+		<style>body{
+		text-align: center;
+	} 
+	</style>
+	<h1>Welcome to maccabi haifa page {{username}}!! </h1>
+</head>
+<body>
+	<p>here you can find every thing about the best team in israel:)</p>
+
+	
+  
+ 
+
+
+	<form action='/home?f=f1' method="POST">
+		<button href = '/players' type="submit" value="submit" class="btn">OUR PLAYERS</button>
+	</form>
+	<br>
+	<form action='/home?f=f2' method="POST">
+		<button href = '/reward' type="submit" value="submit" class="btn">REWARD GALLERY</button>
+	</form>
+	<br>
+	<form action='/home?f=f3' method="POST">
+		<button href = '/history' type="submit" value="submit" class="btn">OUR HISTORY</button>
+	</form>
+	
+		
+
+	
+	<a href = "https://shop.mhaifafc.com/">TO SHOP>>    </a>
+   
+    <a href = "https://tickets.mhaifafc.com/">TICKETS FOR THE GAMES>></a>
+    <br>
+    <a href = "https://www.instagram.com/maccabihaifafc/">OUR INSTEGRAM;)</a>
+    <br>
+
+
+    <form action='/home?f=f4' method="POST">
+    	<button type="submit" value="submit" class="btn">SIGN OUT</button>
+		
+	</form>
+	
+	<p>{{problem}}</p> 
+
+</body>
+</html>

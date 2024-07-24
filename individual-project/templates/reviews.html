@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>REVIEWS</title>
+		<style>body{
+		text-align: center;
+	} 
+	</style>
+	<h1>Hey! just before you are leaving:(, please leave a review:)</h1>
+</head>
+<body>
+	<p>As a feedback for our website it is important for us to know what do you think about our page, and how we can improve it.
+	So please fill the survey here: </p>
+	<br>
+	<br>
+	<form action='/reviews' method="POST">> 
+		<p>how was your experience in our website</p>
+		<input type="radio" id="reallybad" name="experience" value="REALLY-BAD">
+		<label for="reallybad">REALLY BAD</label>
+		<input type="radio" id="bad" name="experience" value="BAD">
+		<label for="bad">BAD</label>
+		<input type="radio" id="ok" name="experience" value="OK">
+		<label for="ok">OK</label>
+		<input type="radio" id="good" name="experience" value="Good">
+		<label for="good">GOOD</label>
+		<input type="radio" id="really good" name="experience" value="REALLY-GOOD">
+		<label for="reallygood">REALLY GOOD</label><br>
+
+
+
+
+
+      	<input type="text" name="improve" placeholder="suggestions to improve?" >
+      	<br>
+		<input type="text" name="comment" placeholder="another comment?" >
+      	<div class="input-container">
+        <br>
+        
+     	
+		
+		
+
+
+		<button type="submit" value="submit" class="btn">SUBMIT</button>
+		
+	</form>
+	
+	<p>{{problem}}</p> 
+
+</body>
+</html>

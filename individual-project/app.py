@@ -35,9 +35,13 @@ def login():
 	if request.method == 'POST':
 		email = request.form['email']
 		password = request.form['password']
-		user = auth.sign_in_with_email_and_password(email, password)
-		login_session['user'] = user
-		return redirect(url_for('verf'))
+		try:
+			user = auth.sign_in_with_email_and_password(email, password)
+			login_session['user'] = user
+			return redirect(url_for('verf'))
+		except: 
+			error = "something went wrong bro, try again maybe:)"
+			return render_template("login.html",error = error)
 
 	else:
 		return render_template("login.html")
@@ -67,7 +71,8 @@ def signup():
 @app.route('/verification',methods = ['GET','POST'])
 def verf():
 	if request.method == 'GET':
-		return render_template("verification.html")
+		username=db.child('users').child('user_UID').child("username").get().val()
+		return render_template("verification.html",username=username)
 
 	else:
 		favplayer = request.form['fav_player']
@@ -85,7 +90,8 @@ def verf():
 @app.route('/home',methods=['GET','POST'])
 def home():
 	if request.method == 'GET':
-		return render_template("home.html")
+		username=db.child('users').child('user_UID').child("username").get().val()
+		return render_template("home.html",username = username)
 
 	else:
 		if request.args.get("f")== 'f1':
@@ -139,19 +145,30 @@ def reviews():
 		return render_template("reviews.html")
 
 	else:
-		experience = request.form['experience']
-		improve = request.form['improve']
-		comment = request.form['comment']
-
-		if experience==None or improve==None or comment==None:
-			problem = "sorry, please fill all the form"
-			return render_template("reviews.html",problem=problem)
-		else:
+		try:
+			experience = request.form['experience']
+			improve = request.form['improve']
+			comment = request.form['comment']
+		
 			review = {"experience":experience,"improve":improve,"comment":comment}
 			db.child('reviews').push(review)
+
 			return redirect(url_for('thanks'))
 
+		except:
+			problem = "sorry, please fill all the form"
+			return render_template("reviews.html",problem=problem)
+		
 
+
+@app.route('comments',methods = ['GET','POST'])
+def comments():
+	if request.method == 'GET':
+		comments = db.child('reviews').child('comment').get().val()
+		return render_template("display.html",comments = comments)
+
+	else:
+		return redirect(url_for('thanks'))
 
 @app.route('/thanks',methods = ['GET','POST'])
 def thanks():

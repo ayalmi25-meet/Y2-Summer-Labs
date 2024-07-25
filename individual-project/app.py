@@ -64,7 +64,8 @@ def signup():
 	
 			login_session['user'] = auth.create_user_with_email_and_password(email, password)
 			user_UID=login_session['user']['localId']
-			db.child('users').child('user_UID').set({"username":username,"password":password,"fav_player":fav_player,"email":email})
+			user_details = {"username":username,"password":password,"fav_player":fav_player,"email":email}
+			db.child('users').child('user_UID').set(user_details)
 			return redirect(url_for('home'))
 		except:
 		 
@@ -112,6 +113,9 @@ def home():
 		elif request.args.get("f")== 'f4':
 			login_session['user']= None
 			return redirect(url_for('reviews'))
+
+		elif request.args.get("f")== 'f5':
+			return redirect(url_for('livechat'))
 
 
 @app.route('/players',methods = ['GET','POST'])
@@ -188,6 +192,25 @@ def thanks():
 
 
 
+
+@app.route('/live-chat',methods=['GET','POST'])
+def livechat():
+	if request.method == 'GET':
+		return render_template("livechat.html")
+	else:
+
+		if request.args.get("f")== 'f1':
+			return redirect(url_for('home'))
+		
+
+		else:
+			messege = request.form['messege']
+			username=db.child('users').child('user_UID').child("username").get().val()
+			live_chat = {"username":username,"messege":messege}
+			db.child('users').child('user_UID').child('messeges').push(live_chat)
+			messeges = db.child('users').child('user_UID').child('messeges').get().val().values()
+			
+			return render_template("livechat.html",messeges = messeges)
 
 
 

@@ -40,28 +40,38 @@ input[type="text"] {
    
 
 	</style>
-	<h1>Hello {{username}}? lets see that this is really you...</h1>
+	<h1>Hey! welcome to maccabi haifa's live chat</h1>
 </head>
 <body>
-	<p>enter your favorite player (same as you wrote when you signed up)</p>
-	<form action='/verification' method="POST">> 
+	<p>here you can talk with other users and have fun:)</p>
+	<form action='/live-chat' method="POST">> 
 		
 
-      	<input type="text" name="fav_player" placeholder="enter favorite player" >
+      	<input type="text" name="messege" placeholder="enter messege" >
 		
       	<div class="input-container">
         
         
-     	
-		
-		
-
-
 		<button type="submit" value="submit" class="btn">SUBMIT</button>
 		
 	</form>
+
+	    {% if messeges %}
+            {% for i in messeges %}
+                <h4>{{ i['username'] }} :  {{ i['messege'] }}</h4>
+            {% endfor %}
+        {% else %}
+            <p>No messeages available.</p>
+        {% endif %}
+	<form action='/live-chat?f=f1' method="POST">> 
 	
-	<p>{{problem}}</p> 
+        
+        
+		<button type="submit" value="submit" class="btn">BACK</button>
+		
+	</form>
+	
+	
 
 </body>
 </html>

@@ -111,11 +111,17 @@ def home():
 			return redirect(url_for('history'))
 
 		elif request.args.get("f")== 'f4':
-			login_session['user']= None
-			return redirect(url_for('reviews'))
+			
+			return redirect(url_for('logout'))
 
 		elif request.args.get("f")== 'f5':
 			return redirect(url_for('livechat'))
+
+@app.route("/logout")
+def logout():
+	login_session.clear()
+	return redirect("reviews")
+
 
 
 @app.route('/players',methods = ['GET','POST'])
@@ -207,8 +213,8 @@ def livechat():
 			messege = request.form['messege']
 			username=db.child('users').child('user_UID').child("username").get().val()
 			live_chat = {"username":username,"messege":messege}
-			db.child('users').child('user_UID').child('messeges').push(live_chat)
-			messeges = db.child('users').child('user_UID').child('messeges').get().val().values()
+			db.child('users').child('messeges').push(live_chat)
+			messeges = db.child('users').child('messeges').get().val().values()
 			
 			return render_template("livechat.html",messeges = messeges)
 

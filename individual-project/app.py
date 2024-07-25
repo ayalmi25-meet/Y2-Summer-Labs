@@ -6,7 +6,7 @@ app = Flask(__name__, template_folder = "/home/student/Documents/GitHub/Y2-Summe
 app.config['SECRET_KEY'] = 'super-secret-key'
 
 
-# need to change this when there is wifi!!
+
 firebaseConfig = {
 	"apiKey": "AIzaSyD1AumZXyg9Wh_oT57OBPjuo--zhDLaE9M",
   "authDomain": "mccabi-haifa-real.firebaseapp.com",
@@ -55,16 +55,22 @@ def signup():
 		return render_template("signup.html")
 
 	else:
-		username = request.form['username']
-		email = request.form['email']
-		password = request.form['password']
-		fav_player = request.form['fav_player']
+		try:
+			username = request.form['username']
+			email = request.form['email']
+			password = request.form['password']
+			fav_player = request.form['fav_player']
 
 	
-		login_session['user'] = auth.create_user_with_email_and_password(email, password)
-		user_UID=login_session['user']['localId']
-		db.child('users').child('user_UID').set({"username":username,"password":password,"fav_player":fav_player,"email":email})
-		return redirect(url_for('home'))
+			login_session['user'] = auth.create_user_with_email_and_password(email, password)
+			user_UID=login_session['user']['localId']
+			db.child('users').child('user_UID').set({"username":username,"password":password,"fav_player":fav_player,"email":email})
+			return redirect(url_for('home'))
+		except:
+		 
+			error = "something went wrong bro, try again maybe:)"
+			return render_template("signup.html",error = error)
+
 	
 
 
@@ -104,6 +110,7 @@ def home():
 			return redirect(url_for('history'))
 
 		elif request.args.get("f")== 'f4':
+			login_session['user']= None
 			return redirect(url_for('reviews'))
 
 
@@ -165,7 +172,7 @@ def reviews():
 def comments():
 	if request.method == 'GET':
 		comments = db.child('reviews').get().val()
-		print(comments)
+	
 		return render_template("display.html",comments = comments)
 
 	else:
